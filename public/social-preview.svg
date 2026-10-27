@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#071B49"/>
+      <stop offset="100%" stop-color="#123D8D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="220" cy="150" r="120" fill="#E7C779" opacity="0.12"/>
+  <circle cx="980" cy="460" r="140" fill="#FFFFFF" opacity="0.08"/>
+  <rect x="100" y="90" width="1000" height="450" rx="26" fill="rgba(255,255,255,0.05)" stroke="#E7C779" stroke-width="2"/>
+  <text x="600" y="255" text-anchor="middle" fill="#FFFFFF" font-family="Georgia, Times, serif" font-size="64" letter-spacing="8">BENJAMIN &amp; ROSETTA</text>
+  <text x="600" y="340" text-anchor="middle" fill="#E7C779" font-family="Georgia, Times, serif" font-size="52" letter-spacing="6">OUR LITTLE FOREVER</text>
+  <text x="600" y="410" text-anchor="middle" fill="#D7DCE5" font-family="Segoe UI, sans-serif" font-size="28" letter-spacing="6">27 OCTOBER 2023 — 27 OCTOBER 2026</text>
+  <text x="600" y="470" text-anchor="middle" fill="#FFFFFF" font-family="Segoe UI, sans-serif" font-size="22" letter-spacing="4">THREE YEARS DOWN • A LIFETIME OF MEMORIES TO GO</text>
+</svg>

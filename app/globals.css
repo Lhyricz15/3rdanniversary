@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #071b49;
+  --royal: #123d8d;
+  --sapphire: #2456a4;
+  --gold: #e7c779;
+  --ivory: #fffaf0;
+  --slate: #d7dce5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--navy);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(231, 199, 121, 0.35);
+}
