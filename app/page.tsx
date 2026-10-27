@@ -4,17 +4,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {
   ArrowRight,
   Camera,
-  Check,
-  ChevronRight,
-  Copy,
   FileText,
   Gift,
-  Heart,
   Lock,
   Menu,
   Music2,
   Sparkles,
-  Star,
   X
 } from 'lucide-react';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
@@ -45,7 +40,7 @@ const storyChapters = [
     title: 'The Kweikrom Camp Days',
     date: '17–22 October 2023',
     description:
-      'This period became part of the beginning of our story and a meaningful chapter in the journey that followed. We did not invent a new history, but we honour the path that led us here.'
+      'This period became part of the beginning of our story and a meaningful chapter in the journey that followed. We did not invent a new history, but we honor the path that led us here.'
   },
   {
     title: 'The Day We Chose Us',
@@ -115,6 +110,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [secretKey, setSecretKey] = useState('');
   const [secretUnlocked, setSecretUnlocked] = useState(false);
+  const [secretFeedback, setSecretFeedback] = useState('');
   const [giftOpened, setGiftOpened] = useState(false);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
   const [celebrateBurst, setCelebrateBurst] = useState(0);
@@ -139,11 +135,20 @@ export default function Home() {
     window.localStorage.setItem('benjamin-rosetta-memories', JSON.stringify(memoryItems));
   }, [memoryItems]);
 
-  const siteUrl = useMemo(() => 'https://example.com', []);
+  const siteUrl = useMemo(() => process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com', []);
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(siteUrl);
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(siteUrl);
+      } else {
+        const copyArea = document.createElement('textarea');
+        copyArea.value = siteUrl;
+        document.body.appendChild(copyArea);
+        copyArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(copyArea);
+      }
       setCopyState('copied');
       window.setTimeout(() => setCopyState('idle'), 1400);
     } catch {
@@ -154,15 +159,18 @@ export default function Home() {
 
   const validateSecret = () => {
     if (!secretKey.trim()) {
-      return 'Please enter the key.';
+      setSecretFeedback('Please enter the key.');
+      return;
     }
 
     if (secretKey.trim() === '27102023') {
       setSecretUnlocked(true);
-      return 'Unlocked';
+      setSecretFeedback('Unlocked.');
+      return;
     }
 
-    return 'That key is not quite right yet.';
+    setSecretUnlocked(false);
+    setSecretFeedback('That key is not quite right yet.');
   };
 
   const handleUpload = (event: ChangeEvent<HTMLInputElement>) => {
@@ -461,7 +469,7 @@ export default function Home() {
                       <input
                         value={item.caption}
                         onChange={(event) => updateMemoryCaption(item.id, event.target.value)}
-                        className="mt-2 w-full rounded-xl border border-white/10 bg-[#112a63] px-3 py-2 text-sm text-white outline-none ring-0 placeholder:text-slate-400"
+                        className="mt-2 w-full rounded-xl border border-white/10 bg-[#112a63] px-3 py-2 text-sm text-white outline-none placeholder:text-slate-400"
                         placeholder="Write a caption"
                       />
 
@@ -507,22 +515,28 @@ export default function Home() {
                   inputMode="numeric"
                   value={secretKey}
                   onChange={(event) => setSecretKey(event.target.value)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      validateSecret();
+                    }
+                  }}
                   placeholder="27102023"
                   className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-lg text-navy outline-none focus:border-gold"
                 />
                 <button
                   type="button"
-                  onClick={() => {
-                    const feedback = validateSecret();
-                    if (feedback !== 'Unlocked') {
-                      window.alert(feedback);
-                    }
-                  }}
+                  onClick={validateSecret}
                   className="rounded-full bg-navy px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-sapphire"
                 >
                   Unlock
                 </button>
               </div>
+
+              {secretFeedback ? (
+                <p className={`mt-4 text-sm ${secretUnlocked ? 'text-emerald-600' : 'text-slate-700'}`}>
+                  {secretFeedback}
+                </p>
+              ) : null}
 
               <AnimatePresence>
                 {secretUnlocked ? (
