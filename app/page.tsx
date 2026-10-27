@@ -95,12 +95,28 @@ With all my love,
 
 Benjamin.`;
 
-function SectionHeading({ eyebrow, title, subtitle }: { eyebrow: string; title: string; subtitle?: string }) {
+function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+  light = false
+}: {
+  eyebrow: string;
+  title: string;
+  subtitle?: string;
+  light?: boolean;
+}) {
   return (
     <div className="mb-10 text-center">
-      <p className="mb-3 text-xs font-medium uppercase tracking-[0.28em] text-gold">{eyebrow}</p>
-      <h2 className="font-serif text-4xl text-white md:text-5xl">{title}</h2>
-      {subtitle ? <p className="mx-auto mt-4 max-w-2xl text-base text-slate-200 md:text-lg">{subtitle}</p> : null}
+      <p className={`mb-3 text-xs font-medium uppercase tracking-[0.28em] ${light ? 'text-navy' : 'text-gold'}`}>
+        {eyebrow}
+      </p>
+      <h2 className={`font-serif text-4xl md:text-5xl ${light ? 'text-navy' : 'text-white'}`}>{title}</h2>
+      {subtitle ? (
+        <p className={`mx-auto mt-4 max-w-2xl text-base md:text-lg ${light ? 'text-slate-700' : 'text-slate-200'}`}>
+          {subtitle}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -368,6 +384,7 @@ export default function Home() {
               eyebrow="Our love story"
               title="Every forever has a beginning."
               subtitle="Three meaningful chapters shaped the journey we now celebrate — beginning in Kweikrom, becoming official on 27 October 2023, and arriving here at our third anniversary."
+              light={true}
             />
 
             <div className="grid gap-6 md:grid-cols-3">
@@ -393,7 +410,12 @@ export default function Home() {
 
         <section className="bg-[#f5f7fb] px-4 py-20 text-navy md:px-8" id="letter">
           <div className="mx-auto max-w-4xl">
-            <SectionHeading eyebrow="A letter to Rosetta" title="To my Rosetta" subtitle="A sincere message from Benjamin to the woman who made this chapter so beautiful." />
+            <SectionHeading
+              eyebrow="A letter to Rosetta"
+              title="To my Rosetta"
+              subtitle="A sincere message from Benjamin to the woman who made this chapter so beautiful."
+              light={true}
+            />
 
             <article className="rounded-[2rem] border border-slate-200 bg-white p-6 md:p-10 shadow-soft">
               <div className="mb-6 flex items-center justify-between border-b border-slate-200 pb-4 text-xs uppercase tracking-[0.2em] text-slate-500">
@@ -505,6 +527,7 @@ export default function Home() {
               eyebrow="A little secret awaits"
               title="Some words are sweeter when you know the little key."
               subtitle="This is a playful, date-based reveal — not a true security barrier. It can be replaced with a real server-validated secret later if desired."
+              light={true}
             />
 
             <div className="rounded-[2rem] border border-slate-200 bg-ivory p-6 md:p-8 shadow-soft">
@@ -566,6 +589,7 @@ export default function Home() {
               eyebrow="The chapters still unwritten"
               title="To all the tomorrows."
               subtitle="A love story is never only about the past. It is also about the future we keep choosing, together."
+              light={true}
             />
 
             <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
